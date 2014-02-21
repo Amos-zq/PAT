@@ -30,7 +30,11 @@ public:
     void prepare_image_ref(void);
     void save_png_to_path(const char * path);
     vImage_Buffer v_image_buffer_structure(void);
+    void normalize(void);
     void clean_up(void);
+    float * d() {return data;}
+    float w() {return width;}
+    float h() {return height;}
 };
 
 

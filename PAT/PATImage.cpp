@@ -106,6 +106,27 @@ vImage_Buffer PATImage::v_image_buffer_structure(void)
     return bf;
 }
 
+void PATImage::normalize(void)
+{
+    float min = INFINITY;
+    float max = -INFINITY;
+    for (int i = 0; i < width*height; i++) {
+        float v = data[i];
+        if (v < min) min = v;
+        if (v > max) max = v;
+    }
+    float range = max-min;
+    if (range > 0) {
+        for (int i = 0; i < width*height; i++) {
+            data[i] = (data[i]-min)/range;
+        }
+    } else {
+        for (int i = 0; i < width*height; i++) {
+            data[i] -= min;
+        }
+    }
+}
+
 void PATImage::clean_up(void)
 {
     if (cgImageRef) {
