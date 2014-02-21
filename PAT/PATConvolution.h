@@ -22,7 +22,7 @@ class PATConvolution {
     vImage_Buffer vImageBufferR;
     vImage_Buffer vImageBufferI;
 public:
-    PATConvolution();
+//    PATConvolution();
     void set_up(int imageWidth, int imageHeight);
     void convolve(PATImage * input, PATWavelet * wavelet, PATImage * output);
     void clean_up(void);

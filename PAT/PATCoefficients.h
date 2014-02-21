@@ -51,7 +51,6 @@ class PATCoefficients {
     int * colsU;
     int * colsB;
 public:
-    PATCoefficients();
     void set_up(int width,
                 int height,
                 float scale,
@@ -59,8 +58,13 @@ public:
                 int hopSize,
                 int halfWS,
                 float magThreshold,
-                bool dataStructureIsList,
-                bool thresholdingIsLocal);
+                bool dataStructureList,
+                bool thresholdingLocal);
+    void set_input(PATImage * inputImage);
+    void perform_convolutions(void);
+    void find_coefficients(void);
+    void save_png_to_path(const char * path);
+    void clean_up();
 };
 
 #endif /* defined(__PAT__PATCoefficients__) */

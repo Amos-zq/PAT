@@ -16,6 +16,7 @@
 #include <CoreFoundation/CoreFoundation.h>
 
 class PATImage {
+private:
     int width;
     int height;
     float * data;
@@ -24,17 +25,19 @@ class PATImage {
     CFDataRef data8;
     CGDataProviderRef provider;
 public:
-    PATImage();
+//    PATImage();
     void set_up_with_path(const char * path);
     void set_up_with_data(float * d, int w, int h);
+    void copy_from_image(PATImage * image);
     void prepare_image_ref(void);
     void save_png_to_path(const char * path);
     vImage_Buffer v_image_buffer_structure(void);
     void normalize(void);
+    void set_zero(void);
     void clean_up(void);
     float * d() {return data;}
-    float w() {return width;}
-    float h() {return height;}
+    int w() {return width;}
+    int h() {return height;}
 };
 
 

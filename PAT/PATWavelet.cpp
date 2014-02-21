@@ -8,14 +8,14 @@
 
 #include "PATWavelet.h"
 
-PATWavelet::PATWavelet()
-{
-    kernelWidth = 0;
-    kernelHeight = 0;
-    kernelR = NULL;
-    kernelI = NULL;
-    kernelV = NULL;
-}
+//PATWavelet::PATWavelet()
+//{
+//    kernelWidth = 0;
+//    kernelHeight = 0;
+//    kernelR = NULL;
+//    kernelI = NULL;
+//    kernelV = NULL;
+//}
 
 void PATWavelet::set_up(int stretch, float scale, float orientation, int nPeaks)
 {
@@ -86,6 +86,8 @@ void PATWavelet::set_up(int stretch, float scale, float orientation, int nPeaks)
             kernelI[index] /= denImag;
         }
     }
+    
+    kernelV = NULL;
 }
 
 void PATWavelet::prepare_to_visualize_kernel(const char * name)

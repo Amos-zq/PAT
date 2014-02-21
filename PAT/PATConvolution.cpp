@@ -8,13 +8,13 @@
 
 #include "PATConvolution.h"
 
-PATConvolution::PATConvolution()
-{
-    width = 0;
-    height = 0;
-    bufferR = NULL;
-    bufferI = NULL;
-}
+//PATConvolution::PATConvolution()
+//{
+//    width = 0;
+//    height = 0;
+//    bufferR = NULL;
+//    bufferI = NULL;
+//}
 
 void PATConvolution::set_up(int imageWidth, int imageHeight)
 {

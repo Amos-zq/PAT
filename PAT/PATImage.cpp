@@ -8,16 +8,16 @@
 
 #include "PATImage.h"
 
-PATImage::PATImage()
-{
-    width = 0;
-    height = 0;
-    data = NULL;
-    ucImage = NULL;
-    cgImageRef = NULL;
-    data8 = NULL;
-    provider = NULL;
-}
+//PATImage::PATImage()
+//{
+//    width = 0;
+//    height = 0;
+//    data = NULL;
+//    ucImage = NULL;
+//    cgImageRef = NULL;
+//    data8 = NULL;
+//    provider = NULL;
+//}
 
 void PATImage::set_up_with_path(const char * path)
 {
@@ -50,6 +50,8 @@ void PATImage::set_up_with_path(const char * path)
     
     CGContextRelease(context);
     free(rawData);
+    
+    cgImageRef = NULL;
 }
 
 void PATImage::set_up_with_data(float * d, int w, int h)
@@ -60,6 +62,14 @@ void PATImage::set_up_with_data(float * d, int w, int h)
     if (d) {
         memcpy(data, d, width*height*sizeof(float));
     }
+    
+    cgImageRef = NULL;
+}
+
+void PATImage::copy_from_image(PATImage * image)
+{
+    // images should be of same size
+    memcpy(data, image->d(), image->w()*image->h()*sizeof(float));
 }
 
 void PATImage::prepare_image_ref(void)
@@ -124,6 +134,13 @@ void PATImage::normalize(void)
         for (int i = 0; i < width*height; i++) {
             data[i] -= min;
         }
+    }
+}
+
+void PATImage::set_zero(void)
+{
+    for (int i = 0; i < width*height; i++) {
+        data[i] = 0.0;
     }
 }
 
