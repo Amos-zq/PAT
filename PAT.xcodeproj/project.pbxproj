@@ -16,6 +16,7 @@
 		699A05C518B7BD880071F993 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 699A05C418B7BD880071F993 /* CoreFoundation.framework */; };
 		699A05C818B7D54F0071F993 /* PATWavelet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 699A05C618B7D54F0071F993 /* PATWavelet.cpp */; };
 		699A05CB18B7DDA60071F993 /* PATConvolution.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 699A05C918B7DDA60071F993 /* PATConvolution.cpp */; };
+		699A05CF18B7EE780071F993 /* PATCoefficients.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 699A05CD18B7EE780071F993 /* PATCoefficients.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -45,6 +46,8 @@
 		699A05C718B7D54F0071F993 /* PATWavelet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PATWavelet.h; sourceTree = "<group>"; };
 		699A05C918B7DDA60071F993 /* PATConvolution.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PATConvolution.cpp; sourceTree = "<group>"; };
 		699A05CA18B7DDA60071F993 /* PATConvolution.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PATConvolution.h; sourceTree = "<group>"; };
+		699A05CD18B7EE780071F993 /* PATCoefficients.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PATCoefficients.cpp; sourceTree = "<group>"; };
+		699A05CE18B7EE780071F993 /* PATCoefficients.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PATCoefficients.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +93,8 @@
 				699A05C618B7D54F0071F993 /* PATWavelet.cpp */,
 				699A05CA18B7DDA60071F993 /* PATConvolution.h */,
 				699A05C918B7DDA60071F993 /* PATConvolution.cpp */,
+				699A05CE18B7EE780071F993 /* PATCoefficients.h */,
+				699A05CD18B7EE780071F993 /* PATCoefficients.cpp */,
 			);
 			path = PAT;
 			sourceTree = "<group>";
@@ -159,6 +164,7 @@
 				699A05CB18B7DDA60071F993 /* PATConvolution.cpp in Sources */,
 				6903595B18B6A3BB00886C2D /* main.cpp in Sources */,
 				699A05BC18B7B0910071F993 /* PATImage.cpp in Sources */,
+				699A05CF18B7EE780071F993 /* PATCoefficients.cpp in Sources */,
 				699A05C818B7D54F0071F993 /* PATWavelet.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
