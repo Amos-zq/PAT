@@ -23,11 +23,11 @@ public:
     void set_up(int stretch, float scale, float orientation, int nPeaks);
     void prepare_to_visualize_kernel(const char * name);
     void clean_up(void);
-    int width() {return kernelWidth;}
-    int height() {return kernelHeight;}
-    float * kR() {return kernelR;}
-    float * kI() {return kernelI;}
-    float * kV() {return kernelV;}
+    inline int width() {return kernelWidth;}
+    inline int height() {return kernelHeight;}
+    inline float * kR() {return kernelR;}
+    inline float * kI() {return kernelI;}
+    inline float * kV() {return kernelV;}
 };
 
 #endif /* defined(__PAT__PATWavelet__) */

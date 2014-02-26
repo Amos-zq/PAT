@@ -35,11 +35,10 @@ public:
     void normalize(void);
     void set_zero(void);
     void clean_up(void);
-    float * d() {return data;}
-    int w() {return width;}
-    int h() {return height;}
+    inline float * d() {return data;}
+    inline int w() {return width;}
+    inline int h() {return height;}
 };
-
 
 #endif /* defined(__PAT__PATImage__) */
 
