@@ -27,8 +27,7 @@ void PATCoefficients::set_up(int width,
         kernel.set_up(1, scale, orientation, 1);
         kernels[i] = kernel;
     }
-    convolution = new PATConvolution;
-    convolution->set_up(width, height);
+    convolution.set_up(width, height);
     input.set_up_with_data(NULL, width, height);
     outputs = (PATImage *)malloc(nOrientations*sizeof(PATImage));
     for (int i = 0; i < nOrientations; i++) {
@@ -105,7 +104,7 @@ void PATCoefficients::set_input(PATImage inputImage)
 void PATCoefficients::perform_convolutions(void)
 {
     for (int i = 0; i < nOrientations; i++) {
-        convolution->convolve(input, kernels[i], outputs[i]);
+        convolution.convolve(input, kernels[i], outputs[i]);
     }
 }
 
@@ -272,6 +271,8 @@ void PATCoefficients::clean_up()
         kernels[i].clean_up();
     }
     free(kernels);
+    
+    convolution.clean_up();
 }
 
 //

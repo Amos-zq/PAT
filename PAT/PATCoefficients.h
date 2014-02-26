@@ -19,7 +19,7 @@ class PATCoefficients {
     
     int nOrientations;
     PATWavelet * kernels;
-    PATConvolution * convolution;
+    PATConvolution convolution;
     PATImage input;
     PATImage * outputs;
     
