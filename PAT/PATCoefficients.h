@@ -32,13 +32,6 @@ class PATCoefficients {
     bool dataStructureIsList;
     bool thresholdingIsLocal;
     
-    int nCoefficients;
-    int * indices;
-    float * m;
-    float * a;
-    float * x;
-    float * y;
-    
     PATImage * M;
     PATImage * N; // for local thresholding
     PATImage * A;
@@ -51,6 +44,12 @@ class PATCoefficients {
     int * colsU;
     int * colsB;
 public:
+    int nCoefficients;
+    int * indices;
+    float * m;
+    float * a;
+    float * x;
+    float * y;
     void set_up(int width,
                 int height,
                 float scale,
