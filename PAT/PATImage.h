@@ -17,14 +17,14 @@
 
 class PATImage {
 private:
-    int width;
-    int height;
-    float * data;
     unsigned char * ucImage;
     CGImageRef cgImageRef;
     CFDataRef data8;
     CGDataProviderRef provider;
 public:
+    int width;
+    int height;
+    float * data;
 //    PATImage();
     void set_up_with_path(const char * path);
     void set_up_with_data(float * d, int w, int h);
@@ -35,9 +35,6 @@ public:
     void normalize(void);
     void set_zero(void);
     void clean_up(void);
-    inline float * d(void) {return data;}
-    inline int w(void) {return width;}
-    inline int h(void) {return height;}
 };
 
 #endif /* defined(__PAT__PATImage__) */

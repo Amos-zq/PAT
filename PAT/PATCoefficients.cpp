@@ -109,7 +109,7 @@ void PATCoefficients::find_coefficients(void)
 {
     int index;
     float magnitude;
-    int nCols = input->w();
+    int nCols = input->width;
     float globalMaxMag = -INFINITY;
     for (int i = 0; i < nSelectedRows; i++) {
         for (int j = 0; j < nSelectedCols; j++) {
@@ -122,7 +122,7 @@ void PATCoefficients::find_coefficients(void)
             for (int row = row1; row <= row2; row++) {
                 for (int col = col1; col <= col2; col++) {
                     for (int k = 0; k < nOrientations; k++) {
-                        magnitude = outputs[k]->d()[row*nCols+col];
+                        magnitude = outputs[k]->data[row*nCols+col];
                         if (magnitude > blockMaxMag) {
                             blockMaxMag = magnitude;
                             maxK = k;
@@ -133,15 +133,15 @@ void PATCoefficients::find_coefficients(void)
                 }
             }
             index = i*nSelectedCols+j;
-            M->d()[index] = blockMaxMag;
-            A->d()[index] = maxK*M_PI/(float)nOrientations+M_PI_2;
-            X->d()[index] = maxRow; // X0: selectedRows[i];
-            Y->d()[index] = maxCol; // Y0: selectedCols[j];
+            M->data[index] = blockMaxMag;
+            A->data[index] = maxK*M_PI/(float)nOrientations+M_PI_2;
+            X->data[index] = maxRow; // X0: selectedRows[i];
+            Y->data[index] = maxCol; // Y0: selectedCols[j];
             if (blockMaxMag > globalMaxMag) globalMaxMag = blockMaxMag;
             for (int row = rowsL[i]; row <= rowsR[i]; row++) {
                 for (int col = colsU[j]; col <= colsB[j]; col++) {
-                    IX->d()[row*nCols+col] = i;
-                    IY->d()[row*nCols+col] = j;
+                    IX->data[row*nCols+col] = i;
+                    IY->data[row*nCols+col] = j;
                 }
             }
         }
@@ -156,31 +156,31 @@ void PATCoefficients::find_coefficients(void)
                 float locMin = INFINITY;
                 for (int ii = -1; ii < 2; ii++) {
                     for (int jj = -1; jj < 2; jj++) {
-                        value = M->d()[(i+ii)*nSelectedCols+(j+jj)];
+                        value = M->data[(i+ii)*nSelectedCols+(j+jj)];
                         if (value > locMax) locMax = value;
                         if (value < locMin) locMin = value;
                     }
                 }
                 int entryIndex = i*nSelectedCols+j;
-                value = M->d()[entryIndex];
+                value = M->data[entryIndex];
                 if (value > 0.75*locMax && locMin > threshold) {
-                    N->d()[entryIndex] = value;
+                    N->data[entryIndex] = value;
                 }
             }
         }
         M->copy_from_image(N);
         for (int i = 1; i < nSelectedRows-1; i++) {
             for (int j = 1; j < nSelectedCols-1; j++) {
-                M->d()[i*nSelectedCols+j] = (M->d()[i*nSelectedCols+j] > 0 ? 1.0 : 0.0);
+                M->data[i*nSelectedCols+j] = (M->data[i*nSelectedCols+j] > 0 ? 1.0 : 0.0);
             }
         }
     }
     if (dataStructureIsList) {
         int memsize = (index+1)*sizeof(float);
-        memcpy(m, M->d(), memsize);
-        memcpy(a, A->d(), memsize);
-        memcpy(x, X->d(), memsize);
-        memcpy(y, Y->d(), memsize);
+        memcpy(m, M->data, memsize);
+        memcpy(a, A->data, memsize);
+        memcpy(x, X->data, memsize);
+        memcpy(y, Y->data, memsize);
         
         nCoefficients = 0;
         float threshold = magnitudeThreshold*globalMaxMag;
@@ -206,7 +206,7 @@ void PATCoefficients::save_png_to_path(const char * path)
 {
     int factor = 2;
     PATImage image;
-    image.set_up_with_data(NULL,factor*input->w(),factor*input->h());
+    image.set_up_with_data(NULL,factor*input->width,factor*input->height);
     if (dataStructureIsList) {
         for (int i = 0; i < nCoefficients; i++) {
             int row0 = factor*x[indices[i]];
@@ -214,19 +214,19 @@ void PATCoefficients::save_png_to_path(const char * path)
             for (int j = -factor; j < factor; j++) {
                 int row = row0+roundf(j*cosf(a[indices[i]]));
                 int col = col0+roundf(j*sinf(a[indices[i]]));
-                image.d()[row*image.w()+col] = m[indices[i]];
+                image.data[row*image.width+col] = m[indices[i]];
             }
         }
     } else {
         for (int i = 0; i < nSelectedRows; i++) {
             for (int j = 0; j < nSelectedCols; j++) {
-                int index = i*X->w()+j;
-                int row0 = factor*X->d()[index];
-                int col0 = factor*Y->d()[index];
+                int index = i*X->width+j;
+                int row0 = factor*X->data[index];
+                int col0 = factor*Y->data[index];
                 for (int k = -factor; k < factor; k++) {
-                    int row = row0+roundf(k*cosf(A->d()[index]));
-                    int col = col0+roundf(k*sinf(A->d()[index]));
-                    image.d()[row*image.w()+col] = M->d()[index];
+                    int row = row0+roundf(k*cosf(A->data[index]));
+                    int col = col0+roundf(k*sinf(A->data[index]));
+                    image.data[row*image.width+col] = M->data[index];
                 }
             }
         }

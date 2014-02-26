@@ -69,7 +69,7 @@ void PATImage::set_up_with_data(float * d, int w, int h)
 void PATImage::copy_from_image(PATImage * image)
 {
     // images should be of same size
-    memcpy(data, image->d(), image->w()*image->h()*sizeof(float));
+    memcpy(data, image->data, image->width*image->height*sizeof(float));
 }
 
 void PATImage::prepare_image_ref(void)

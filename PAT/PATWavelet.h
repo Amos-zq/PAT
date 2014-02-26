@@ -13,21 +13,16 @@
 #include <math.h>
 
 class PATWavelet {
+public:
     int kernelWidth;
     int kernelHeight;
     float * kernelR;
     float * kernelI;
     float * kernelV;
-public:
 //    PATWavelet();
     void set_up(int stretch, float scale, float orientation, int nPeaks);
     void prepare_to_visualize_kernel(const char * name);
     void clean_up(void);
-    inline int width() {return kernelWidth;}
-    inline int height() {return kernelHeight;}
-    inline float * kR() {return kernelR;}
-    inline float * kI() {return kernelI;}
-    inline float * kV() {return kernelV;}
 };
 
 #endif /* defined(__PAT__PATWavelet__) */

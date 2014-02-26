@@ -32,10 +32,10 @@ void PATConvolution::convolve(PATImage * input, PATWavelet * wavelet, PATImage *
 {
     vImage_Buffer vImageBufferInput = input->v_image_buffer_structure();
     
-    vImageConvolve_PlanarF(&vImageBufferInput, &vImageBufferR, NULL, 0, 0, wavelet->kR(), wavelet->width(), wavelet->height(), 0.0, kvImageBackgroundColorFill);
-    vImageConvolve_PlanarF(&vImageBufferInput, &vImageBufferI, NULL, 0, 0, wavelet->kI(), wavelet->width(), wavelet->height(), 0.0, kvImageBackgroundColorFill);
+    vImageConvolve_PlanarF(&vImageBufferInput, &vImageBufferR, NULL, 0, 0, wavelet->kernelR, wavelet->kernelWidth, wavelet->kernelHeight, 0.0, kvImageBackgroundColorFill);
+    vImageConvolve_PlanarF(&vImageBufferInput, &vImageBufferI, NULL, 0, 0, wavelet->kernelI, wavelet->kernelWidth, wavelet->kernelHeight, 0.0, kvImageBackgroundColorFill);
     
-    vDSP_vdist(bufferR->d(), 1, bufferI->d(), 1, output->d(), 1, output->w()*output->h());
+    vDSP_vdist(bufferR->data, 1, bufferI->data, 1, output->data, 1, output->width*output->height);
     output->normalize();
 }
 
