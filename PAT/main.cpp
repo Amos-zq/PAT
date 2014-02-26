@@ -19,6 +19,9 @@ void coefficients(void);
 
 int main(int argc, const char * argv[])
 {
+//    image();
+//    wavelet();
+//    convolution();
     coefficients();
 
     return 0;
@@ -39,7 +42,7 @@ void wavelet(void)
     wav.set_up(1, 10.0, 60.0, 1);
     wav.prepare_to_visualize_kernel("real");
     PATImage image;
-    image.set_up_with_data(wav.kV(), wav.width(), wav.height());
+    image.set_up_with_data(wav.kernelV, wav.width, wav.height);
     image.save_png_to_path("/Users/Cicconet/Desktop/Kernel.png");
     image.clean_up();
     wav.clean_up();
@@ -48,14 +51,14 @@ void wavelet(void)
 void convolution(void)
 {
     PATWavelet wavelet;
-    wavelet.set_up(1, 0.5, 90.0, 1);
+    wavelet.set_up(1, 3.0, 45.0, 1);
     PATImage image;
     image.set_up_with_path("/Users/Cicconet/Desktop/Image.png");
     PATConvolution conv;
-    conv.set_up(image.w(), image.h());
+    conv.set_up(image.width, image.height);
     PATImage output;
-    output.set_up_with_data(NULL, image.w(), image.h());
-    conv.convolve(&image, &wavelet, &output);
+    output.set_up_with_data(NULL, image.width, image.height);
+    conv.convolve(image, wavelet, output);
     output.save_png_to_path("/Users/Cicconet/Desktop/Output.png");
     conv.clean_up();
     image.clean_up();
@@ -71,11 +74,11 @@ void coefficients(void)
     int nOrient = 16;
     int hopSize = 5;
     int halfWS = 1;
-    float magThreshold = 0.01;
+    float magThreshold = 0.02;
     bool dataStructureList = true;
     bool thresholdingLocal = true;
-    coef.set_up(image.w(), image.h(), scale, nOrient, hopSize, halfWS, magThreshold, dataStructureList, thresholdingLocal);
-    coef.set_input(&image);
+    coef.set_up(image.width, image.height, scale, nOrient, hopSize, halfWS, magThreshold, dataStructureList, thresholdingLocal);
+    coef.set_input(image);
     coef.perform_convolutions();
     coef.find_coefficients();
     coef.save_png_to_path("/Users/Cicconet/Desktop/Output.png");

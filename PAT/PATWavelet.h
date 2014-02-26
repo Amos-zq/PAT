@@ -14,12 +14,11 @@
 
 class PATWavelet {
 public:
-    int kernelWidth;
-    int kernelHeight;
+    int width;
+    int height;
     float * kernelR;
     float * kernelI;
     float * kernelV;
-//    PATWavelet();
     void set_up(int stretch, float scale, float orientation, int nPeaks);
     void prepare_to_visualize_kernel(const char * name);
     void clean_up(void);

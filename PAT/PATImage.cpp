@@ -8,17 +8,6 @@
 
 #include "PATImage.h"
 
-//PATImage::PATImage()
-//{
-//    width = 0;
-//    height = 0;
-//    data = NULL;
-//    ucImage = NULL;
-//    cgImageRef = NULL;
-//    data8 = NULL;
-//    provider = NULL;
-//}
-
 void PATImage::set_up_with_path(const char * path)
 {
     CFStringRef filePath = CFStringCreateWithCString(NULL, path, kCFStringEncodingUTF8);
@@ -66,10 +55,10 @@ void PATImage::set_up_with_data(float * d, int w, int h)
     cgImageRef = NULL;
 }
 
-void PATImage::copy_from_image(PATImage * image)
+void PATImage::copy_from_image(PATImage image)
 {
     // images should be of same size
-    memcpy(data, image->data, image->width*image->height*sizeof(float));
+    memcpy(data, image.data, image.width*image.height*sizeof(float));
 }
 
 void PATImage::prepare_image_ref(void)

@@ -20,17 +20,21 @@ void PATCoefficients::set_up(int width,
 {
     magnitudeThreshold = magThreshold;
     nOrientations = nOrient;
-    kernels = (PATWavelet **)malloc(nOrientations*sizeof(PATWavelet *));
+    kernels = (PATWavelet *)malloc(nOrientations*sizeof(PATWavelet));
     for (int i = 0; i < nOrientations; i++) {
         float orientation = (float)i*180.0/(float)nOrientations;
-        kernels[i] = new PATWavelet; kernels[i]->set_up(1, scale, orientation, 1);
+        PATWavelet kernel;
+        kernel.set_up(1, scale, orientation, 1);
+        kernels[i] = kernel;
     }
     convolution = new PATConvolution;
     convolution->set_up(width, height);
-    input = new PATImage; input->set_up_with_data(NULL, width, height);
-    outputs = (PATImage **)malloc(nOrientations*sizeof(PATImage *));
+    input.set_up_with_data(NULL, width, height);
+    outputs = (PATImage *)malloc(nOrientations*sizeof(PATImage));
     for (int i = 0; i < nOrientations; i++) {
-        outputs[i] = new PATImage; outputs[i]->set_up_with_data(NULL, width, height);
+        PATImage output;
+        output.set_up_with_data(NULL, width, height);
+        outputs[i] = output;
     }
     halfWindowSize = halfWS;
     nSelectedRows = floorf((height-2*halfWindowSize)/(float)hopSize)+1;
@@ -55,13 +59,13 @@ void PATCoefficients::set_up(int width,
     thresholdingIsLocal = thresholdingLocal;
     
     // matrix data structure
-    M = new PATImage;   M->set_up_with_data(NULL, nSelectedCols, nSelectedRows);
-    N = new PATImage;   N->set_up_with_data(NULL, nSelectedCols, nSelectedRows);
-    A = new PATImage;   A->set_up_with_data(NULL, nSelectedCols, nSelectedRows);
-    X = new PATImage;   X->set_up_with_data(NULL, nSelectedCols, nSelectedRows);
-    Y = new PATImage;   Y->set_up_with_data(NULL, nSelectedCols, nSelectedRows);
-    IX = new PATImage;  IX->set_up_with_data(NULL, width, height);
-    IY = new PATImage;  IY->set_up_with_data(NULL, width, height);
+    M.set_up_with_data(NULL, nSelectedCols, nSelectedRows);
+    N.set_up_with_data(NULL, nSelectedCols, nSelectedRows);
+    A.set_up_with_data(NULL, nSelectedCols, nSelectedRows);
+    X.set_up_with_data(NULL, nSelectedCols, nSelectedRows);
+    Y.set_up_with_data(NULL, nSelectedCols, nSelectedRows);
+    IX.set_up_with_data(NULL, width, height);
+    IY.set_up_with_data(NULL, width, height);
     rowsL = (int *)malloc(nSelectedRows*sizeof(int));
     rowsR = (int *)malloc(nSelectedRows*sizeof(int));
     colsU = (int *)malloc(nSelectedCols*sizeof(int));
@@ -93,9 +97,9 @@ void PATCoefficients::set_up(int width,
     }
 }
 
-void PATCoefficients::set_input(PATImage * inputImage)
+void PATCoefficients::set_input(PATImage inputImage)
 {
-    input->copy_from_image(inputImage);
+    input.copy_from_image(inputImage);
 }
 
 void PATCoefficients::perform_convolutions(void)
@@ -109,7 +113,7 @@ void PATCoefficients::find_coefficients(void)
 {
     int index;
     float magnitude;
-    int nCols = input->width;
+    int nCols = input.width;
     float globalMaxMag = -INFINITY;
     for (int i = 0; i < nSelectedRows; i++) {
         for (int j = 0; j < nSelectedCols; j++) {
@@ -122,7 +126,7 @@ void PATCoefficients::find_coefficients(void)
             for (int row = row1; row <= row2; row++) {
                 for (int col = col1; col <= col2; col++) {
                     for (int k = 0; k < nOrientations; k++) {
-                        magnitude = outputs[k]->data[row*nCols+col];
+                        magnitude = outputs[k].data[row*nCols+col];
                         if (magnitude > blockMaxMag) {
                             blockMaxMag = magnitude;
                             maxK = k;
@@ -133,21 +137,21 @@ void PATCoefficients::find_coefficients(void)
                 }
             }
             index = i*nSelectedCols+j;
-            M->data[index] = blockMaxMag;
-            A->data[index] = maxK*M_PI/(float)nOrientations+M_PI_2;
-            X->data[index] = maxRow; // X0: selectedRows[i];
-            Y->data[index] = maxCol; // Y0: selectedCols[j];
+            M.data[index] = blockMaxMag;
+            A.data[index] = maxK*M_PI/(float)nOrientations+M_PI_2;
+            X.data[index] = maxRow; // X0: selectedRows[i];
+            Y.data[index] = maxCol; // Y0: selectedCols[j];
             if (blockMaxMag > globalMaxMag) globalMaxMag = blockMaxMag;
             for (int row = rowsL[i]; row <= rowsR[i]; row++) {
                 for (int col = colsU[j]; col <= colsB[j]; col++) {
-                    IX->data[row*nCols+col] = i;
-                    IY->data[row*nCols+col] = j;
+                    IX.data[row*nCols+col] = i;
+                    IY.data[row*nCols+col] = j;
                 }
             }
         }
     }
     if (thresholdingIsLocal) {
-        N->set_zero();
+        N.set_zero();
         float value;
         float threshold = magnitudeThreshold*globalMaxMag;
         for (int i = 1; i < nSelectedRows-1; i++) {
@@ -156,31 +160,31 @@ void PATCoefficients::find_coefficients(void)
                 float locMin = INFINITY;
                 for (int ii = -1; ii < 2; ii++) {
                     for (int jj = -1; jj < 2; jj++) {
-                        value = M->data[(i+ii)*nSelectedCols+(j+jj)];
+                        value = M.data[(i+ii)*nSelectedCols+(j+jj)];
                         if (value > locMax) locMax = value;
                         if (value < locMin) locMin = value;
                     }
                 }
                 int entryIndex = i*nSelectedCols+j;
-                value = M->data[entryIndex];
+                value = M.data[entryIndex];
                 if (value > 0.75*locMax && locMin > threshold) {
-                    N->data[entryIndex] = value;
+                    N.data[entryIndex] = value;
                 }
             }
         }
-        M->copy_from_image(N);
+        M.copy_from_image(N);
         for (int i = 1; i < nSelectedRows-1; i++) {
             for (int j = 1; j < nSelectedCols-1; j++) {
-                M->data[i*nSelectedCols+j] = (M->data[i*nSelectedCols+j] > 0 ? 1.0 : 0.0);
+                M.data[i*nSelectedCols+j] = (M.data[i*nSelectedCols+j] > 0 ? 1.0 : 0.0);
             }
         }
     }
     if (dataStructureIsList) {
         int memsize = (index+1)*sizeof(float);
-        memcpy(m, M->data, memsize);
-        memcpy(a, A->data, memsize);
-        memcpy(x, X->data, memsize);
-        memcpy(y, Y->data, memsize);
+        memcpy(m, M.data, memsize);
+        memcpy(a, A.data, memsize);
+        memcpy(x, X.data, memsize);
+        memcpy(y, Y.data, memsize);
         
         nCoefficients = 0;
         float threshold = magnitudeThreshold*globalMaxMag;
@@ -206,7 +210,7 @@ void PATCoefficients::save_png_to_path(const char * path)
 {
     int factor = 2;
     PATImage image;
-    image.set_up_with_data(NULL,factor*input->width,factor*input->height);
+    image.set_up_with_data(NULL,factor*input.width,factor*input.height);
     if (dataStructureIsList) {
         for (int i = 0; i < nCoefficients; i++) {
             int row0 = factor*x[indices[i]];
@@ -220,13 +224,13 @@ void PATCoefficients::save_png_to_path(const char * path)
     } else {
         for (int i = 0; i < nSelectedRows; i++) {
             for (int j = 0; j < nSelectedCols; j++) {
-                int index = i*X->width+j;
-                int row0 = factor*X->data[index];
-                int col0 = factor*Y->data[index];
+                int index = i*X.width+j;
+                int row0 = factor*X.data[index];
+                int col0 = factor*Y.data[index];
                 for (int k = -factor; k < factor; k++) {
-                    int row = row0+roundf(k*cosf(A->data[index]));
-                    int col = col0+roundf(k*sinf(A->data[index]));
-                    image.data[row*image.width+col] = M->data[index];
+                    int row = row0+roundf(k*cosf(A.data[index]));
+                    int col = col0+roundf(k*sinf(A.data[index]));
+                    image.data[row*image.width+col] = M.data[index];
                 }
             }
         }
@@ -245,13 +249,13 @@ void PATCoefficients::clean_up()
         free(y);
     }
     
-    M->clean_up(); delete M;
-    N->clean_up(); delete N;
-    A->clean_up(); delete A;
-    X->clean_up(); delete X;
-    Y->clean_up(); delete Y;
-    IX->clean_up(); delete IX;
-    IY->clean_up(); delete IY;
+    M.clean_up();
+    N.clean_up();
+    A.clean_up();
+    X.clean_up();
+    Y.clean_up();
+    IX.clean_up();
+    IY.clean_up();
     free(rowsL);
     free(rowsR);
     free(colsU);
@@ -259,13 +263,13 @@ void PATCoefficients::clean_up()
     
     free(selectedRows);
     free(selectedCols);
-    input->clean_up(); delete input;
+    input.clean_up();
     for (int i = 0; i < nOrientations; i++) {
-        outputs[i]->clean_up(); delete outputs[i];
+        outputs[i].clean_up();
     }
     free(outputs);
     for (int i = 0; i < nOrientations; i++) {
-        kernels[i]->clean_up(); delete kernels[i];
+        kernels[i].clean_up();
     }
     free(kernels);
 }

@@ -25,10 +25,9 @@ public:
     int width;
     int height;
     float * data;
-//    PATImage();
     void set_up_with_path(const char * path);
     void set_up_with_data(float * d, int w, int h);
-    void copy_from_image(PATImage * image);
+    void copy_from_image(PATImage image);
     void prepare_image_ref(void);
     void save_png_to_path(const char * path);
     vImage_Buffer v_image_buffer_structure(void);

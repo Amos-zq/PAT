@@ -8,15 +8,6 @@
 
 #include "PATWavelet.h"
 
-//PATWavelet::PATWavelet()
-//{
-//    kernelWidth = 0;
-//    kernelHeight = 0;
-//    kernelR = NULL;
-//    kernelI = NULL;
-//    kernelV = NULL;
-//}
-
 void PATWavelet::set_up(int stretch, float scale, float orientation, int nPeaks)
 {
     // controls width of gaussian window (default: scale)
@@ -30,8 +21,8 @@ void PATWavelet::set_up(int stretch, float scale, float orientation, int nPeaks)
     
     // width and height of kernel
     int support = 2.5*sigma/gamma;
-    kernelWidth = 2*support+1;
-    kernelHeight = 2*support+1;
+    width = 2*support+1;
+    height = 2*support+1;
     
     // wavelength (default: 4*sigma)
     float lambda = 1.0/(float)nPeaks*4.0*sigma;
@@ -39,8 +30,8 @@ void PATWavelet::set_up(int stretch, float scale, float orientation, int nPeaks)
     // phase offset (in radians)
     float psi = 0.0;
     
-    kernelR = (float *)malloc(kernelWidth*kernelHeight*sizeof(float));
-    kernelI = (float *)malloc(kernelWidth*kernelHeight*sizeof(float));
+    kernelR = (float *)malloc(width*height*sizeof(float));
+    kernelI = (float *)malloc(width*height*sizeof(float));
     
     float sumReal = 0.0;
     float sumImag = 0.0;
@@ -53,7 +44,7 @@ void PATWavelet::set_up(int stretch, float scale, float orientation, int nPeaks)
             float mi = expfactor*sinf(2.0*M_PI/lambda*xprime+psi);
             int row = support+x;
             int col = support+y;
-            int index = row*kernelWidth+col;
+            int index = row*width+col;
             kernelR[index] = mr;
             kernelI[index] = mi;
             sumReal += mr;
@@ -62,13 +53,13 @@ void PATWavelet::set_up(int stretch, float scale, float orientation, int nPeaks)
     }
     
     // make mean = 0
-    float offsetReal = sumReal/(kernelWidth*kernelHeight);
-    float offsetImag = sumImag/(kernelWidth*kernelHeight);
+    float offsetReal = sumReal/(width*height);
+    float offsetImag = sumImag/(width*height);
     sumReal = 0.0;
     sumReal = 0.0;
-    for (int i = 0; i < kernelHeight; i++) {
-        for (int j = 0; j < kernelWidth; j++) {
-            int index = i*kernelWidth+j;
+    for (int i = 0; i < height; i++) {
+        for (int j = 0; j < width; j++) {
+            int index = i*width+j;
             kernelR[index] -= offsetReal;
             kernelI[index] -= offsetImag;
             sumReal += (kernelR[index]*kernelR[index]);
@@ -79,9 +70,9 @@ void PATWavelet::set_up(int stretch, float scale, float orientation, int nPeaks)
     // make norm = 1
     float denReal = sqrtf(sumReal);
     float denImag = sqrtf(sumImag);
-    for (int i = 0; i < kernelHeight; i++) {
-        for (int j = 0; j < kernelWidth; j++) {
-            int index = i*kernelWidth+j;
+    for (int i = 0; i < height; i++) {
+        for (int j = 0; j < width; j++) {
+            int index = i*width+j;
             kernelR[index] /= denReal;
             kernelI[index] /= denImag;
         }
@@ -93,7 +84,7 @@ void PATWavelet::set_up(int stretch, float scale, float orientation, int nPeaks)
 void PATWavelet::prepare_to_visualize_kernel(const char * name)
 {
     if (!kernelV) {
-        kernelV = (float *)malloc(kernelWidth*kernelHeight*sizeof(float));
+        kernelV = (float *)malloc(width*height*sizeof(float));
     }
     
     float min = INFINITY;
@@ -106,11 +97,11 @@ void PATWavelet::prepare_to_visualize_kernel(const char * name)
     } else if (strcmp(name, "imaginary") == 0) {
         kernel = kernelI;
     }
-    for (int i = 0; i < kernelWidth*kernelHeight; i++) {
+    for (int i = 0; i < width*height; i++) {
         if (kernel[i] < min) min = kernel[i];
         if (kernel[i] > max) max = kernel[i];
     }
-    for (int i = 0; i < kernelWidth*kernelHeight; i++) {
+    for (int i = 0; i < width*height; i++) {
         kernelV[i] = (kernel[i]-min)/(max-min);
     }
 }

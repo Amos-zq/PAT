@@ -8,43 +8,31 @@
 
 #include "PATConvolution.h"
 
-//PATConvolution::PATConvolution()
-//{
-//    width = 0;
-//    height = 0;
-//    bufferR = NULL;
-//    bufferI = NULL;
-//}
-
 void PATConvolution::set_up(int imageWidth, int imageHeight)
 {
     width = imageWidth;
     height = imageHeight;
-    bufferR = new PATImage;
-    bufferR->set_up_with_data(NULL, width, height);
-    bufferI = new PATImage;
-    bufferI->set_up_with_data(NULL, width, height);
-    vImageBufferR = bufferR->v_image_buffer_structure();
-    vImageBufferI = bufferI->v_image_buffer_structure();
+    bufferR.set_up_with_data(NULL, width, height);
+    bufferI.set_up_with_data(NULL, width, height);
+    vImageBufferR = bufferR.v_image_buffer_structure();
+    vImageBufferI = bufferI.v_image_buffer_structure();
 }
 
-void PATConvolution::convolve(PATImage * input, PATWavelet * wavelet, PATImage * output)
+void PATConvolution::convolve(PATImage input, PATWavelet wavelet, PATImage output)
 {
-    vImage_Buffer vImageBufferInput = input->v_image_buffer_structure();
+    vImage_Buffer vImageBufferInput = input.v_image_buffer_structure();
     
-    vImageConvolve_PlanarF(&vImageBufferInput, &vImageBufferR, NULL, 0, 0, wavelet->kernelR, wavelet->kernelWidth, wavelet->kernelHeight, 0.0, kvImageBackgroundColorFill);
-    vImageConvolve_PlanarF(&vImageBufferInput, &vImageBufferI, NULL, 0, 0, wavelet->kernelI, wavelet->kernelWidth, wavelet->kernelHeight, 0.0, kvImageBackgroundColorFill);
+    vImageConvolve_PlanarF(&vImageBufferInput, &vImageBufferR, NULL, 0, 0, wavelet.kernelR, wavelet.width, wavelet.height, 0.0, kvImageBackgroundColorFill);
+    vImageConvolve_PlanarF(&vImageBufferInput, &vImageBufferI, NULL, 0, 0, wavelet.kernelI, wavelet.width, wavelet.height, 0.0, kvImageBackgroundColorFill);
     
-    vDSP_vdist(bufferR->data, 1, bufferI->data, 1, output->data, 1, output->width*output->height);
-    output->normalize();
+    vDSP_vdist(bufferR.data, 1, bufferI.data, 1, output.data, 1, output.width*output.height);
+    output.normalize();
 }
 
 void PATConvolution::clean_up(void)
 {
-    bufferR->clean_up();
-    bufferI->clean_up();
-    delete bufferR;
-    delete bufferI;
+    bufferR.clean_up();
+    bufferI.clean_up();
 }
 
 //

@@ -18,10 +18,10 @@ class PATCoefficients {
     float magnitudeThreshold;
     
     int nOrientations;
-    PATWavelet ** kernels;
+    PATWavelet * kernels;
     PATConvolution * convolution;
-    PATImage * input;
-    PATImage ** outputs;
+    PATImage input;
+    PATImage * outputs;
     
     int halfWindowSize;
     int nSelectedRows;
@@ -32,13 +32,13 @@ class PATCoefficients {
     bool dataStructureIsList;
     bool thresholdingIsLocal;
     
-    PATImage * M;
-    PATImage * N; // for local thresholding
-    PATImage * A;
-    PATImage * X;
-    PATImage * Y;
-    PATImage * IX;
-    PATImage * IY;
+    PATImage M;
+    PATImage N; // for local thresholding
+    PATImage A;
+    PATImage X;
+    PATImage Y;
+    PATImage IX;
+    PATImage IY;
     int * rowsL;
     int * rowsR;
     int * colsU;
@@ -59,7 +59,7 @@ public:
                 float magThreshold,
                 bool dataStructureList,
                 bool thresholdingLocal);
-    void set_input(PATImage * inputImage);
+    void set_input(PATImage inputImage);
     void perform_convolutions(void);
     void find_coefficients(void);
     void save_png_to_path(const char * path);
