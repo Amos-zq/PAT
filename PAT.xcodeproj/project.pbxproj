@@ -10,10 +10,6 @@
 		6903595B18B6A3BB00886C2D /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6903595A18B6A3BB00886C2D /* main.cpp */; };
 		6903595D18B6A3BB00886C2D /* PAT.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6903595C18B6A3BB00886C2D /* PAT.1 */; };
 		699A05BC18B7B0910071F993 /* PATImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 699A05BA18B7B0910071F993 /* PATImage.cpp */; };
-		699A05BE18B7B4820071F993 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 699A05BD18B7B4820071F993 /* Accelerate.framework */; };
-		699A05C118B7BA320071F993 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 699A05C018B7BA320071F993 /* ImageIO.framework */; };
-		699A05C318B7BD5B0071F993 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 699A05C218B7BD5B0071F993 /* CoreGraphics.framework */; };
-		699A05C518B7BD880071F993 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 699A05C418B7BD880071F993 /* CoreFoundation.framework */; };
 		699A05C818B7D54F0071F993 /* PATWavelet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 699A05C618B7D54F0071F993 /* PATWavelet.cpp */; };
 		699A05CB18B7DDA60071F993 /* PATConvolution.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 699A05C918B7DDA60071F993 /* PATConvolution.cpp */; };
 		699A05CF18B7EE780071F993 /* PATCoefficients.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 699A05CD18B7EE780071F993 /* PATCoefficients.cpp */; };
@@ -39,10 +35,6 @@
 		6903595C18B6A3BB00886C2D /* PAT.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = PAT.1; sourceTree = "<group>"; };
 		699A05BA18B7B0910071F993 /* PATImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PATImage.cpp; sourceTree = "<group>"; };
 		699A05BB18B7B0910071F993 /* PATImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PATImage.h; sourceTree = "<group>"; };
-		699A05BD18B7B4820071F993 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
-		699A05C018B7BA320071F993 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
-		699A05C218B7BD5B0071F993 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		699A05C418B7BD880071F993 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		699A05C618B7D54F0071F993 /* PATWavelet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PATWavelet.cpp; sourceTree = "<group>"; };
 		699A05C718B7D54F0071F993 /* PATWavelet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PATWavelet.h; sourceTree = "<group>"; };
 		699A05C918B7DDA60071F993 /* PATConvolution.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PATConvolution.cpp; sourceTree = "<group>"; };
@@ -58,10 +50,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				69C5EF3218CE121700F84C3A /* libpng16.16.dylib in Frameworks */,
-				699A05C518B7BD880071F993 /* CoreFoundation.framework in Frameworks */,
-				699A05C318B7BD5B0071F993 /* CoreGraphics.framework in Frameworks */,
-				699A05C118B7BA320071F993 /* ImageIO.framework in Frameworks */,
-				699A05BE18B7B4820071F993 /* Accelerate.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -106,10 +94,6 @@
 			isa = PBXGroup;
 			children = (
 				69C5EF3118CE121700F84C3A /* libpng16.16.dylib */,
-				699A05C418B7BD880071F993 /* CoreFoundation.framework */,
-				699A05C218B7BD5B0071F993 /* CoreGraphics.framework */,
-				699A05C018B7BA320071F993 /* ImageIO.framework */,
-				699A05BD18B7B4820071F993 /* Accelerate.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

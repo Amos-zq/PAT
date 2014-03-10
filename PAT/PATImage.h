@@ -10,10 +10,7 @@
 #define __PAT__PATImage__
 
 #include <iostream>
-#include <Accelerate/Accelerate.h>
-#include <ImageIO/ImageIO.h>
-#include <CoreGraphics/CoreGraphics.h>
-#include <CoreFoundation/CoreFoundation.h>
+#include <math.h>
 #include <png.h>
 
 class PATImage {

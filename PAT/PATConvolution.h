@@ -10,7 +10,6 @@
 #define __PAT__PATConvolution__
 
 #include <iostream>
-#include <Accelerate/Accelerate.h>
 #include "PATImage.h"
 #include "PATWavelet.h"
 
