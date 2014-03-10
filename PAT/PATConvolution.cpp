@@ -14,18 +14,37 @@ void PATConvolution::set_up(int imageWidth, int imageHeight)
     height = imageHeight;
     bufferR.set_up_with_data(NULL, width, height);
     bufferI.set_up_with_data(NULL, width, height);
-    vImageBufferR = bufferR.v_image_buffer_structure();
-    vImageBufferI = bufferI.v_image_buffer_structure();
 }
 
 void PATConvolution::convolve(PATImage input, PATWavelet wavelet, PATImage output)
 {
-    vImage_Buffer vImageBufferInput = input.v_image_buffer_structure();
+    bufferR.set_zero();
+    bufferI.set_zero();
     
-    vImageConvolve_PlanarF(&vImageBufferInput, &vImageBufferR, NULL, 0, 0, wavelet.kernelR, wavelet.width, wavelet.height, 0.0, kvImageBackgroundColorFill);
-    vImageConvolve_PlanarF(&vImageBufferInput, &vImageBufferI, NULL, 0, 0, wavelet.kernelI, wavelet.width, wavelet.height, 0.0, kvImageBackgroundColorFill);
+    int khw = floorf(wavelet.width/2.0); // kernel half width
+    int khh = floorf(wavelet.height/2.0); // kernel half height
     
-    vDSP_vdist(bufferR.data, 1, bufferI.data, 1, output.data, 1, output.width*output.height);
+    
+    float accR, accI;
+    int indexInputRow, indexInput, indexKernelRow, indexKernel;
+    for (int i = khh; i < input.height-khh; i++) {
+        for (int j = khw; j < input.width-khw; j++) {
+            accR = 0.0;
+            accI = 0.0;
+            for (int ii = -khh; ii <= khh ; ii++) {
+                indexInputRow = (i+ii)*input.width+j;
+                indexKernelRow = (khh+ii)*wavelet.width+khw;
+                for (int jj = -khw; jj <= khw; jj++) {
+                    indexInput = indexInputRow+jj;
+                    indexKernel = indexKernelRow+jj;
+                    accR += input.data[indexInput]*wavelet.kernelR[indexKernel];
+                    accI += input.data[indexInput]*wavelet.kernelI[indexKernel];
+                }
+            }
+            output.data[i*output.width+j] = sqrtf(accR*accR+accI*accI);
+        }
+    }
+    
     output.normalize();
 }
 

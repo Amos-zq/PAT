@@ -19,8 +19,6 @@ class PATConvolution {
     int height;
     PATImage bufferR;
     PATImage bufferI;
-    vImage_Buffer vImageBufferR;
-    vImage_Buffer vImageBufferI;
 public:
     void set_up(int imageWidth, int imageHeight);
     void convolve(PATImage input, PATWavelet wavelet, PATImage output);

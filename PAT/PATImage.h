@@ -14,13 +14,11 @@
 #include <ImageIO/ImageIO.h>
 #include <CoreGraphics/CoreGraphics.h>
 #include <CoreFoundation/CoreFoundation.h>
+#include <png.h>
 
 class PATImage {
 private:
-    unsigned char * ucImage;
-    CGImageRef cgImageRef;
-    CFDataRef data8;
-    CGDataProviderRef provider;
+
 public:
     int width;
     int height;
@@ -28,9 +26,7 @@ public:
     void set_up_with_path(const char * path);
     void set_up_with_data(float * d, int w, int h);
     void copy_from_image(PATImage image);
-    void prepare_image_ref(void);
     void save_png_to_path(const char * path);
-    vImage_Buffer v_image_buffer_structure(void);
     void normalize(void);
     void set_zero(void);
     void clean_up(void);

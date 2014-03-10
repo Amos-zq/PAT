@@ -17,6 +17,7 @@
 		699A05C818B7D54F0071F993 /* PATWavelet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 699A05C618B7D54F0071F993 /* PATWavelet.cpp */; };
 		699A05CB18B7DDA60071F993 /* PATConvolution.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 699A05C918B7DDA60071F993 /* PATConvolution.cpp */; };
 		699A05CF18B7EE780071F993 /* PATCoefficients.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 699A05CD18B7EE780071F993 /* PATCoefficients.cpp */; };
+		69C5EF3218CE121700F84C3A /* libpng16.16.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 69C5EF3118CE121700F84C3A /* libpng16.16.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -48,6 +49,7 @@
 		699A05CA18B7DDA60071F993 /* PATConvolution.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PATConvolution.h; sourceTree = "<group>"; };
 		699A05CD18B7EE780071F993 /* PATCoefficients.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PATCoefficients.cpp; sourceTree = "<group>"; };
 		699A05CE18B7EE780071F993 /* PATCoefficients.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PATCoefficients.h; sourceTree = "<group>"; };
+		69C5EF3118CE121700F84C3A /* libpng16.16.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libpng16.16.dylib; path = ../../../../opt/local/lib/libpng16.16.dylib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				69C5EF3218CE121700F84C3A /* libpng16.16.dylib in Frameworks */,
 				699A05C518B7BD880071F993 /* CoreFoundation.framework in Frameworks */,
 				699A05C318B7BD5B0071F993 /* CoreGraphics.framework in Frameworks */,
 				699A05C118B7BA320071F993 /* ImageIO.framework in Frameworks */,
@@ -102,6 +105,7 @@
 		699A05BF18B7B48F0071F993 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				69C5EF3118CE121700F84C3A /* libpng16.16.dylib */,
 				699A05C418B7BD880071F993 /* CoreFoundation.framework */,
 				699A05C218B7BD5B0071F993 /* CoreGraphics.framework */,
 				699A05C018B7BA320071F993 /* ImageIO.framework */,
@@ -243,6 +247,15 @@
 		6903596118B6A3BB00886C2D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/usr/local/include,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/opt/local/lib,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -250,6 +263,15 @@
 		6903596218B6A3BB00886C2D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/usr/local/include,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/opt/local/lib,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

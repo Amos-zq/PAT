@@ -51,7 +51,7 @@ void wavelet(void)
 void convolution(void)
 {
     PATWavelet wavelet;
-    wavelet.set_up(1, 3.0, 45.0, 1);
+    wavelet.set_up(1, 1.0, 0.0, 1);
     PATImage image;
     image.set_up_with_path("/Users/Cicconet/Desktop/Image.png");
     PATConvolution conv;
