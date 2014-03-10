@@ -17,6 +17,9 @@ void wavelet(void);
 void convolution(void);
 void coefficients(void);
 
+// to compile on Terminal, type
+// g++ *.cpp -o pat -I/usr/local/include -L/opt/local/lib -lpng
+
 int main(int argc, const char * argv[])
 {
 //    image();
