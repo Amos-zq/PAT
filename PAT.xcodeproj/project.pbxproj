@@ -9,11 +9,11 @@
 /* Begin PBXBuildFile section */
 		6903595B18B6A3BB00886C2D /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6903595A18B6A3BB00886C2D /* main.cpp */; };
 		6903595D18B6A3BB00886C2D /* PAT.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6903595C18B6A3BB00886C2D /* PAT.1 */; };
+		6939A5FB18CFC817004A405B /* libpng16.16.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6939A5FA18CFC817004A405B /* libpng16.16.dylib */; };
 		699A05BC18B7B0910071F993 /* PATImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 699A05BA18B7B0910071F993 /* PATImage.cpp */; };
 		699A05C818B7D54F0071F993 /* PATWavelet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 699A05C618B7D54F0071F993 /* PATWavelet.cpp */; };
 		699A05CB18B7DDA60071F993 /* PATConvolution.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 699A05C918B7DDA60071F993 /* PATConvolution.cpp */; };
 		699A05CF18B7EE780071F993 /* PATCoefficients.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 699A05CD18B7EE780071F993 /* PATCoefficients.cpp */; };
-		69C5EF3218CE121700F84C3A /* libpng16.16.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 69C5EF3118CE121700F84C3A /* libpng16.16.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -33,6 +33,7 @@
 		6903595718B6A3BB00886C2D /* PAT */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = PAT; sourceTree = BUILT_PRODUCTS_DIR; };
 		6903595A18B6A3BB00886C2D /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		6903595C18B6A3BB00886C2D /* PAT.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = PAT.1; sourceTree = "<group>"; };
+		6939A5FA18CFC817004A405B /* libpng16.16.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libpng16.16.dylib; path = ../../../../usr/local/lib/libpng16.16.dylib; sourceTree = "<group>"; };
 		699A05BA18B7B0910071F993 /* PATImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PATImage.cpp; sourceTree = "<group>"; };
 		699A05BB18B7B0910071F993 /* PATImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PATImage.h; sourceTree = "<group>"; };
 		699A05C618B7D54F0071F993 /* PATWavelet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PATWavelet.cpp; sourceTree = "<group>"; };
@@ -41,7 +42,6 @@
 		699A05CA18B7DDA60071F993 /* PATConvolution.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PATConvolution.h; sourceTree = "<group>"; };
 		699A05CD18B7EE780071F993 /* PATCoefficients.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PATCoefficients.cpp; sourceTree = "<group>"; };
 		699A05CE18B7EE780071F993 /* PATCoefficients.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PATCoefficients.h; sourceTree = "<group>"; };
-		69C5EF3118CE121700F84C3A /* libpng16.16.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libpng16.16.dylib; path = ../../../../opt/local/lib/libpng16.16.dylib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,7 +49,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				69C5EF3218CE121700F84C3A /* libpng16.16.dylib in Frameworks */,
+				6939A5FB18CFC817004A405B /* libpng16.16.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -93,7 +93,7 @@
 		699A05BF18B7B48F0071F993 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				69C5EF3118CE121700F84C3A /* libpng16.16.dylib */,
+				6939A5FA18CFC817004A405B /* libpng16.16.dylib */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -238,7 +238,7 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					/opt/local/lib,
+					/usr/local/lib,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -254,7 +254,7 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					/opt/local/lib,
+					/usr/local/lib,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
