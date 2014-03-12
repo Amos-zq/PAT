@@ -14,12 +14,9 @@
 #include "PATWavelet.h"
 
 class PATConvolution {
-    int width;
-    int height;
-    PATImage bufferR;
-    PATImage bufferI;
+    PATImage paddedImage;
 public:
-    void set_up(int imageWidth, int imageHeight);
+    void set_up(int imageWidth, int imageHeight, int kernelWidth, int kernelHeight);
     void convolve(PATImage input, PATWavelet wavelet, PATImage output);
     void clean_up(void);
 };

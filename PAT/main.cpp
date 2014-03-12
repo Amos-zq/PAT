@@ -58,7 +58,7 @@ void convolution(void)
     PATImage image;
     image.set_up_with_path("/Users/Cicconet/Desktop/Image.png");
     PATConvolution conv;
-    conv.set_up(image.width, image.height);
+    conv.set_up(image.width, image.height, wavelet.width, wavelet.height);
     PATImage output;
     output.set_up_with_data(NULL, image.width, image.height);
     conv.convolve(image, wavelet, output);
