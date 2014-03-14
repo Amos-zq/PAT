@@ -5,19 +5,19 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>BB7DDFDA-2425-4543-B094-642A539EB2A9</string>
+	<string>46D6747C-44CF-476A-B755-3CA78AA1BEF5</string>
 	<key>IDESourceControlProjectName</key>
 	<string>PAT</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>F7493AC2-D8B3-4A33-BEBB-B8F37E2BEF0C</key>
+		<key>4D419C0F-5128-451D-8F32-4F19301388AF</key>
 		<string>https://github.com/cicconet/PAT.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>PAT.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>F7493AC2-D8B3-4A33-BEBB-B8F37E2BEF0C</key>
+		<key>4D419C0F-5128-451D-8F32-4F19301388AF</key>
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
@@ -25,14 +25,14 @@
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>F7493AC2-D8B3-4A33-BEBB-B8F37E2BEF0C</string>
+	<string>4D419C0F-5128-451D-8F32-4F19301388AF</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>F7493AC2-D8B3-4A33-BEBB-B8F37E2BEF0C</string>
+			<string>4D419C0F-5128-451D-8F32-4F19301388AF</string>
 			<key>IDESourceControlWCCName</key>
 			<string>PAT</string>
 		</dict>
