@@ -2,6 +2,7 @@ Points and Tangents
 
 Captures relevant points and tangents from images, via Morlet wavelet filtering.
 Should be cross platform, although I only tested it in OS X.
+For a Mac-only version, see https://github.com/cicconet/PAT_Mac.
 
 
 main.cpp
