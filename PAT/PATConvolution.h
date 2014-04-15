@@ -17,7 +17,7 @@ class PATConvolution {
     PATImage paddedImage;
 public:
     void set_up(int imageWidth, int imageHeight, int kernelWidth, int kernelHeight);
-    void convolve(PATImage input, PATWavelet wavelet, PATImage output);
+    void convolve(PATImage input, PATWavelet wavelet, PATImage output, bool ignoreDirection);
     void clean_up(void);
 };
 

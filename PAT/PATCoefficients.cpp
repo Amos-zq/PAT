@@ -16,13 +16,20 @@ void PATCoefficients::set_up(int width,
                              int halfWS,
                              float magThreshold,
                              bool dataStructureList,
-                             bool thresholdingLocal)
+                             bool thresholdingLocal,
+                             bool ignoreDirection)
 {
     magnitudeThreshold = magThreshold;
     nOrientations = nOrient;
     kernels = (PATWavelet *)malloc(nOrientations*sizeof(PATWavelet));
+    float maxAngle;
+    if (ignoreDirection) {
+        maxAngle = 180.0;
+    } else {
+        maxAngle = 360.0;
+    }
     for (int i = 0; i < nOrientations; i++) {
-        float orientation = (float)i*180.0/(float)nOrientations;
+        float orientation = (float)i*maxAngle/(float)nOrientations;
         PATWavelet kernel;
         kernel.set_up(1, scale, orientation, 1);
         kernels[i] = kernel;
@@ -56,6 +63,7 @@ void PATCoefficients::set_up(int width,
     
     dataStructureIsList = dataStructureList;
     thresholdingIsLocal = thresholdingLocal;
+    ignoreTangentDirection = ignoreDirection;
     
     // matrix data structure
     M.set_up_with_data(NULL, nSelectedCols, nSelectedRows);
@@ -104,7 +112,7 @@ void PATCoefficients::set_input(PATImage inputImage)
 void PATCoefficients::perform_convolutions(void)
 {
     for (int i = 0; i < nOrientations; i++) {
-        convolution.convolve(input, kernels[i], outputs[i]);
+        convolution.convolve(input, kernels[i], outputs[i], ignoreTangentDirection);
     }
 }
 
@@ -114,6 +122,12 @@ void PATCoefficients::find_coefficients(void)
     float magnitude;
     int nCols = input.width;
     float globalMaxMag = -INFINITY;
+    float factor;
+    if (ignoreTangentDirection) {
+        factor = M_PI;
+    } else {
+        factor = 2.0*M_PI;
+    }
     for (int i = 0; i < nSelectedRows; i++) {
         for (int j = 0; j < nSelectedCols; j++) {
             int row1 = selectedRows[i]-halfWindowSize;
@@ -137,7 +151,7 @@ void PATCoefficients::find_coefficients(void)
             }
             index = i*nSelectedCols+j;
             M.data[index] = blockMaxMag;
-            A.data[index] = maxK*M_PI/(float)nOrientations+M_PI_2;
+            A.data[index] = maxK*factor/(float)nOrientations+M_PI_2;
             X.data[index] = maxRow; // X0: selectedRows[i];
             Y.data[index] = maxCol; // Y0: selectedCols[j];
             if (blockMaxMag > globalMaxMag) globalMaxMag = blockMaxMag;
@@ -166,7 +180,7 @@ void PATCoefficients::find_coefficients(void)
                 }
                 int entryIndex = i*nSelectedCols+j;
                 value = M.data[entryIndex];
-                if (value > 0.75*locMax && locMin > threshold) {
+                if (value > 0.5*locMax && locMin > threshold) {
                     N.data[entryIndex] = value;
                 }
             }
@@ -211,25 +225,56 @@ void PATCoefficients::save_png_to_path(const char * path)
     PATImage image;
     image.set_up_with_data(NULL,factor*input.width,factor*input.height);
     if (dataStructureIsList) {
-        for (int i = 0; i < nCoefficients; i++) {
-            int row0 = factor*x[indices[i]];
-            int col0 = factor*y[indices[i]];
-            for (int j = -factor; j < factor; j++) {
-                int row = row0+roundf(j*cosf(a[indices[i]]));
-                int col = col0+roundf(j*sinf(a[indices[i]]));
-                image.data[row*image.width+col] = m[indices[i]];
+        if (ignoreTangentDirection) {
+            for (int i = 0; i < nCoefficients; i++) {
+                int row0 = factor*x[indices[i]];
+                int col0 = factor*y[indices[i]];
+                for (int j = -factor; j < factor; j++) {
+                    int row = row0+roundf(j*cosf(a[indices[i]]));
+                    int col = col0+roundf(j*sinf(a[indices[i]]));
+                    image.data[row*image.width+col] = m[indices[i]];
+                }
+            }
+        } else {
+            for (int i = 0; i < nCoefficients; i++) {
+                int row0 = factor*x[indices[i]];
+                int col0 = factor*y[indices[i]];
+                for (int j = 1; j < 2*factor; j++) {
+                    int row = row0+roundf(j*cosf(a[indices[i]]));
+                    int col = col0+roundf(j*sinf(a[indices[i]]));
+                    image.data[row*image.width+col] = 0.5*m[indices[i]];
+                }
+                image.data[row0*image.width+col0] = 1.0;
             }
         }
     } else {
-        for (int i = 0; i < nSelectedRows; i++) {
-            for (int j = 0; j < nSelectedCols; j++) {
-                int index = i*X.width+j;
-                int row0 = factor*X.data[index];
-                int col0 = factor*Y.data[index];
-                for (int k = -factor; k < factor; k++) {
-                    int row = row0+roundf(k*cosf(A.data[index]));
-                    int col = col0+roundf(k*sinf(A.data[index]));
-                    image.data[row*image.width+col] = M.data[index];
+        if (ignoreTangentDirection) {
+            for (int i = 0; i < nSelectedRows; i++) {
+                for (int j = 0; j < nSelectedCols; j++) {
+                    int index = i*X.width+j;
+                    int row0 = factor*X.data[index];
+                    int col0 = factor*Y.data[index];
+                    for (int k = -factor; k < factor; k++) {
+                        int row = row0+roundf(k*cosf(A.data[index]));
+                        int col = col0+roundf(k*sinf(A.data[index]));
+                        image.data[row*image.width+col] = M.data[index];
+                    }
+                }
+            }
+        } else {
+            for (int i = 0; i < nSelectedRows; i++) {
+                for (int j = 0; j < nSelectedCols; j++) {
+                    int index = i*X.width+j;
+                    if (M.data[index] > 0) {
+                        int row0 = factor*X.data[index];
+                        int col0 = factor*Y.data[index];
+                        for (int k = 1; k < 2*factor; k++) {
+                            int row = row0+roundf(k*cosf(A.data[index]));
+                            int col = col0+roundf(k*sinf(A.data[index]));
+                            image.data[row*image.width+col] = 0.5*M.data[index];
+                        }
+                        image.data[row0*image.width+col0] = 1.0;
+                    }
                 }
             }
         }

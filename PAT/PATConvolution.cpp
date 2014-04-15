@@ -17,7 +17,7 @@ void PATConvolution::set_up(int imageWidth, int imageHeight, int kernelWidth, in
     paddedImage.set_up_with_data(NULL, width, height);
 }
 
-void PATConvolution::convolve(PATImage input, PATWavelet wavelet, PATImage output)
+void PATConvolution::convolve(PATImage input, PATWavelet wavelet, PATImage output, bool ignoreDirection)
 {
     int khw = floorf(wavelet.width/2.0); // kernel half width
     int khh = floorf(wavelet.height/2.0); // kernel half height
@@ -31,23 +31,37 @@ void PATConvolution::convolve(PATImage input, PATWavelet wavelet, PATImage outpu
     
     float accR, accI;
     int indexPadded, indexKernel;
-    for (int i = 0; i < input.height; i++) {
-        for (int j = 0; j < input.width; j++) {
-            accR = 0.0;
-            accI = 0.0;
-            for (int ii = -khh; ii <= khh ; ii++) {
-                for (int jj = -khw; jj <= khw; jj++) {
-                    indexPadded = (khh+i+ii)*paddedImage.width+khw+j+jj;
-                    indexKernel = (khh+ii)*wavelet.width+khw+jj;
-                    accR += paddedImage.data[indexPadded]*wavelet.kernelR[indexKernel];
-                    accI += paddedImage.data[indexPadded]*wavelet.kernelI[indexKernel];
+    if (ignoreDirection) {
+        for (int i = 0; i < input.height; i++) {
+            for (int j = 0; j < input.width; j++) {
+                accR = 0.0;
+                accI = 0.0;
+                for (int ii = -khh; ii <= khh ; ii++) {
+                    for (int jj = -khw; jj <= khw; jj++) {
+                        indexPadded = (khh+i+ii)*paddedImage.width+khw+j+jj;
+                        indexKernel = (khh+ii)*wavelet.width+khw+jj;
+                        accR += paddedImage.data[indexPadded]*wavelet.kernelR[indexKernel];
+                        accI += paddedImage.data[indexPadded]*wavelet.kernelI[indexKernel];
+                    }
                 }
+                output.data[i*output.width+j] = sqrtf(accR*accR+accI*accI);
             }
-            output.data[i*output.width+j] = sqrtf(accR*accR+accI*accI);
+        }
+    } else {
+        for (int i = 0; i < input.height; i++) {
+            for (int j = 0; j < input.width; j++) {
+                accI = 0.0;
+                for (int ii = -khh; ii <= khh ; ii++) {
+                    for (int jj = -khw; jj <= khw; jj++) {
+                        indexPadded = (khh+i+ii)*paddedImage.width+khw+j+jj;
+                        indexKernel = (khh+ii)*wavelet.width+khw+jj;
+                        accI += paddedImage.data[indexPadded]*wavelet.kernelI[indexKernel];
+                    }
+                }
+                output.data[i*output.width+j] = accI;
+            }
         }
     }
-    
-    output.normalize();
 }
 
 void PATConvolution::clean_up(void)

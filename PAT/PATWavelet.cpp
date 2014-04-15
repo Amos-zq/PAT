@@ -41,7 +41,7 @@ void PATWavelet::set_up(int stretch, float scale, float orientation, int nPeaks)
             float yprime = -sinf(theta)*x+cosf(theta)*y;
             float expfactor = expf(-0.5/(sigma*sigma)*(xprime*xprime+gamma*gamma*yprime*yprime));
             float mr = expfactor*cosf(2.0*M_PI/lambda*xprime+psi);
-            float mi = expfactor*sinf(2.0*M_PI/lambda*xprime+psi);
+            float mi = -expfactor*sinf(2.0*M_PI/lambda*xprime+psi);
             int row = support+x;
             int col = support+y;
             int index = row*width+col;

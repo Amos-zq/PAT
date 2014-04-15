@@ -5,7 +5,7 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>46D6747C-44CF-476A-B755-3CA78AA1BEF5</string>
+	<string>F8EB578E-99BE-479C-8E7D-265700EAF000</string>
 	<key>IDESourceControlProjectName</key>
 	<string>PAT</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
@@ -21,7 +21,7 @@
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/cicconet/PAT.git</string>
+	<string>https://bitbucket.org/cicconet/triangles_mac.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>

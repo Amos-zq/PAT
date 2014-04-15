@@ -31,6 +31,7 @@ class PATCoefficients {
     
     bool dataStructureIsList;
     bool thresholdingIsLocal;
+    bool ignoreTangentDirection;
     
     PATImage M;
     PATImage N; // for local thresholding
@@ -58,7 +59,8 @@ public:
                 int halfWS,
                 float magThreshold,
                 bool dataStructureList,
-                bool thresholdingLocal);
+                bool thresholdingLocal,
+                bool ignoreDirection);
     void set_input(PATImage inputImage);
     void perform_convolutions(void);
     void find_coefficients(void);
