@@ -80,7 +80,7 @@ void coefficients(void)
     PATImage image;
     image.set_up_with_path("/Users/Cicconet/Desktop/Image.png");
     PATCoefficients coef;
-    float scale = 1.0;
+    float scale = 2.0;
     int nOrient = 16;
     int hopSize = 5;
     int halfWS = 1;
